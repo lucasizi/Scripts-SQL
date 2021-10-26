@@ -4,11 +4,19 @@ union all
 select employee_id, first_name, salary from hr.employees
 order by 1;
 
+select 'A' as campo1, 'B' as campo2 from dual
+union all
+select 'A' as campo1, 'B' as campo2 from dual;
+
 -- exemplos de union
 select employee_id, first_name, salary from hr.employees
 union
 select employee_id, first_name, salary from hr.employees
 order by 1;
+
+select 'A' as campo1, 'B' as campo2 from dual
+union
+select 'A' as campo1, 'B' as campo2 from dual;
 
 --simulando erro 1
 select employee_id, first_name, salary from hr.employees
