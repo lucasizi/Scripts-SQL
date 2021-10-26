@@ -1,4 +1,4 @@
--- ezxemplos de union all
+-- exemplos de union all
 select employee_id, first_name, salary from hr.employees
 union all
 select employee_id, first_name, salary from hr.employees
