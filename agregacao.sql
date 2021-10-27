@@ -12,6 +12,7 @@ where ano ='2014'
 group by estado
 order by 2 desc;
 
+
 --AVG média por estado com sigla estado
 select a.estado, a.cod_uf, b.sigla_uf, avg(a.populacao) media
 from senso a inner join uf b
@@ -78,6 +79,21 @@ group by a.estado
 order by 6 desc;
 
 
+-- apresentar nome da cidade com maior população de cada estados e sigla do estado
+select a.nome_mun, a.estado, a.populacao, c.sigla_uf
+from
+    (select b.estado, max(b.populacao) as populacao from senso b
+    where b.ano='2014'
+    group by b.estado) b
+join senso a
+on a.estado = b.estado
+and a.populacao = b.populacao
+inner join uf c
+on a.cod_uf=c.cod_uf
+order by a.populacao desc;
+
+
+
 -- apresentar nome da cidade com maior população de cada estados
 
 select a.estado, a.nome_mun, a.populacao
@@ -85,8 +101,7 @@ from
 (
     select b.estado, max(b.populacao) as populacao from senso b
     where b.ano='2014'
-    group by b.estado
-) b
+    group by b.estado) b
 join senso a
 on a.estado = b.estado
 and a.populacao = b.populacao
