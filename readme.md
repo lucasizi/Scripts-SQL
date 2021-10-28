@@ -1,1 +1,1 @@
-Repósitorio destinado a estudos de SQL e PL/SQL
+Repositório destinado a estudos de SQL e PL/SQL.
