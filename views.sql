@@ -102,4 +102,57 @@ WHERE A.DEPARTMENT_ID NOT IN ('10', '20');
 -- UTILIZANDO A VIEW
 SELECT * FROM v_depto_union;
 
+--CRIAR VIEW DE HISTORICO DE FUNCIONARIO
 
+--VERIFICANDO SE ALGUM FUNCIONARIO NÃO TEM HISTORICO.
+
+SELECT * FROM HR.EMPLOYEES
+WHERE EMPLOYEE_ID NOT IN(SELECT EMPLOYEE_ID FROM HR.JOB_HISTORY);
+
+--VERIFICANDO SE ALGUM FUNCIONARIO TEM HISTORICO.
+SELECT * FROM HR.EMPLOYEES
+WHERE EMPLOYEE_ID IN(SELECT EMPLOYEE_ID FROM HR.JOB_HISTORY);
+
+-- criando a view de historico de funciorios/ usando union all
+create or replace view v_hist_func
+as
+--selectionando informa??es do historico
+select a.EMPLOYEE_ID,
+       b.FIRST_NAME,
+       a.START_DATE,
+       a.END_DATE,
+       a.JOB_ID,
+       c.JOB_TITLE, 
+       a.DEPARTMENT_ID,
+       d.DEPARTMENT_NAME
+from hr.JOB_HISTORY a
+inner join hr.EMPLOYEES b
+on a.EMPLOYEE_ID=b.EMPLOYEE_ID
+inner join hr.JOBS c
+on a.JOB_ID=c.JOB_ID
+inner join HR.DEPARTMENTS d
+on a.DEPARTMENT_ID=d.DEPARTMENT_ID
+--where a.EMPLOYEE_ID='101'
+
+union all
+
+select a.EMPLOYEE_ID,
+       a.FIRST_NAME,
+       (select max(b.END_DATE)+1 from hr.JOB_HISTORY b
+           where a.EMPLOYEE_ID=b.EMPLOYEE_ID)as START_DATE,
+       sysdate END_DATE,
+       a.JOB_ID,
+       c.JOB_TITLE,
+       a.DEPARTMENT_ID,
+       d.DEPARTMENT_NAME
+from hr.EMPLOYEES a
+inner join hr.JOBS c
+on a.JOB_ID=c.JOB_ID
+inner join HR.DEPARTMENTS d
+on a.DEPARTMENT_ID=d.DEPARTMENT_ID
+--where a.EMPLOYEE_ID='101'
+order by 1 asc,3 asc;
+
+--consultando view
+select * from v_hist_func
+where EMPLOYEE_ID='101';
