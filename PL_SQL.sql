@@ -1,0 +1,43 @@
+-- Estrutura de bloco PL / SQL
+
+
+-- Opcional
+-- Variáveis, cursores, exceções definidas pelo usuário.
+DECLARE
+-- Obrigatorio, instruções pl/sql, sql. INICIO DO BLOCO
+BEGIN 
+-- Ações a serem desempenhadas quando ocorrem erros.
+EXCEPTION
+-- OBRITÓRIO, FINAL DO BLOCO
+END;
+
+-- MTODA UNIDADE PL/SQL COMPREENDE UM OU MAIS BLOCOS. ONDE ESSES BLOCOS PODEM SER INTEIRAMENTE SEPARADOS OU ANINHADOS UM DENTRO DO OUTRO.
+-- EXISTEM TRÊS TIPOS DE BLOCOS:
+
+-- BLOCO ANONIMO
+BEGIN
+--STATEMENTS
+EXCEPTION
+END;
+-- BLOCO ANONIMO
+
+-- PROCEDURE
+PROCEDURE name
+IS
+BEGIN
+-- STATEMENTS
+EXCEPTION
+END;
+-- PROCEDURE
+
+-- FUNÇÃO
+FUNCTION name
+RETURN datatype
+IS
+BEGIN
+-- STATEMENT
+RETURN value;
+EXCEPTION
+END;
+-- FUNÇÃO
+
