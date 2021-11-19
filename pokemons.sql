@@ -86,7 +86,7 @@ INSERT INTO pokemon VALUES (79, 'Slowpoke');
 INSERT INTO pokemon VALUES (80, 'Slowbro');
 INSERT INTO pokemon VALUES (81, 'Magnemite');
 INSERT INTO pokemon VALUES (82, 'Magneton');
-INSERT INTO pokemon VALUES (83, 'Farfetch\'d');
+INSERT INTO pokemon VALUES (83, 'Farfetch\');
 INSERT INTO pokemon VALUES (84, 'Doduo');
 INSERT INTO pokemon VALUES (85, 'Dodrio');
 INSERT INTO pokemon VALUES (86, 'Seel');
