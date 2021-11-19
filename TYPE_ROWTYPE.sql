@@ -21,7 +21,7 @@ BEGIN
     
 END;
 
--- USANDO ROWTYOE
+-- USANDO ROWTYPE
 SET SERVEROUTPUT ON
 DECLARE
     V_EMP HR.EMPLOYEES%ROWTYPE;
@@ -37,5 +37,5 @@ BEGIN
     
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            DBMS_OUTPUT.PUT_LINE('Matricula não existe');
+            DBMS_OUTPUT.PUT_LINE('Matricula nï¿½o existe');
 END;
