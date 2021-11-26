@@ -64,3 +64,6 @@ END;
     ou algo assim...
     O proximo é mais complicado, transformar o resto da divisão em meses.
 */
+
+-- criar "Gerador de desculpas", onde a pessoa entra com uma data e o programa gera uma desculpa aleatoria
+-- exemplo "no dia 25/05/2022 eu terei uma consulta médica" / "no dia 25/05/2022 eu terei uma reunião importante"
