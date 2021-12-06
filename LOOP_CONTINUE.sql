@@ -23,4 +23,8 @@ BEGIN
         IF VALOR < 15 THEN
             CONTINUE;
         END IF;
-        DBMS_OUTPUT.PUT_LINE('DENTRO DO LOOP O VALOR É IGUAL '||TO_CHAR(P_VALOR));
+        DBMS_OUTPUT.PUT_LINE('DENTRO DO LOOP O VALOR É IGUAL '||TO_CHAR(VALOR));
+        EXIT WHEN VALOR > 15;
+    END LOOP;
+    DBMS_OUTPUT.PUT_LINE('Após o loop, o valor é igual a: '||to_char(valor));
+END;
