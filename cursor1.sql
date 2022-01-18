@@ -1,4 +1,5 @@
 SET SERVEROUTPUT ON
+
 DECLARE
 -- DECLARAÇÃO DE VARIAVEIS
 V_IDFUNC HR.employees.EMPLOYEE_ID%TYPE;
@@ -31,3 +32,5 @@ END LOOP;
 
 --FECHA CURSOR
 close cs_salario_top_10;
+
+end;
