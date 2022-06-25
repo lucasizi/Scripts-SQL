@@ -8,10 +8,14 @@ BEGIN
     FOR EMP_REC IN EMP_CUR
     LOOP
         DBMS_OUTPUT.PUT_LINE('Nome do funcionario: '||emp_rec.first_name);
-        DBMS_OUTPUT.PUT_LINE('Sobrenome do funcionario: '||emp_rec.first_name);
-        DBMS_OUTPUT.PUT_LINE('Salario do funcionario: '||emp_rec.first_name);
+        DBMS_OUTPUT.PUT_LINE('Sobrenome do funcionario: '||emp_rec.last_name);
+        DBMS_OUTPUT.PUT_LINE('Salario do funcionario: '||emp_rec.salary);
         DBMS_OUTPUT.PUT_LINE('---------------------------------------------------');
     END LOOP;
 END;
 
 -- EXECUTANDO A PROCEDURE
+SET SERVEROUTPUT ON
+BEGIN
+    DETALHE_DOS_FUNCIONARIOS;
+END;
