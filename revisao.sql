@@ -357,7 +357,7 @@ AND B.ANO='2014'
 GROUP BY A.ESTADO;
 
 -- FUNÇÕES DE CADEIRA DE CARACTERES
-SELECT ASCII('ab') FROM SYS.DUAL;
+SELECT NULL FROM SYS.DUAL;
 
 
 -- exemplo com lower
@@ -365,3 +365,81 @@ select  a.department_name nome_depto,
         lower(a.department_name) nome_depto_l,
         lower('Curso SQL')
         from hr.departments a;
+        
+select  a.department_name nome_depto,
+        initcap(upper(a.department_name)) nome_depto_1,
+        initcap('curso SQL')
+        from hr.departments a;
+        
+-- exemplos com concat
+select  a.first_name,
+        a.last_name,
+        concat(a.first_name, a.last_name) nome_completo
+from hr.employees a;
+
+select  a.first_name,
+        a.last_name,
+        a.first_name||' '||a.last_name nome_completo,
+        a.first_name||' '||a.last_name||' '||a.salary texto
+        from hr.employees a;
+        
+select  a.employee_id,
+        lpad(a.employee_id,10,'0') id_lpad,
+        a.first_name
+        from hr.employees a;
+        
+select  substr('oracle',2,4) from sys.dual;
+
+
+select  a.first_name,
+        a.last_name,
+        substr(a.first_name,1,1) ini_1,
+        substr(a.last_name,1,1) ini_2,
+        concat(substr(a.first_name,1,1),substr(a.last_name,1,1)) ini_3
+        from hr.employees a;
+        
+select  a.first_name,
+        substr(a.first_name,1,3) parte1,
+        substr(a.first_name,4,10) parte2
+        from hr.employees a;
+        
+select  a.job_title,
+        instr(a.job_title,'r') posicao
+        from hr.jobs a;
+        
+select  a.job_title,
+        instr(a.job_title,'es') posicao
+        from hr.jobs a
+        order by 2 desc;
+        
+select  a.job_title,
+        instr(a.job_title,'t',12) posicao
+        from hr.jobs a;
+        
+select a.job_title,
+        ltrim(a.job_title,'AFPS') posicao
+        from hr.jobs a;
+        
+select '        andre' com_espaco,
+ltrim('     andre   ',' ') com_espaco
+from dual;
+
+
+select  a.job_title,
+        length(a.job_title) tamanho
+        from hr.jobs a;
+        
+select  a.job_title,
+        translate(a.job_title, 'S', 'x') traducao
+        from hr.jobs a;
+        
+select  a.job_title,
+        replace(a.job_title,'Manager','Gerente')
+        from hr.jobs a;
+        
+select row_number() over (order by a.salary desc) sequencia,
+a.first_name,
+a.salary,
+NTILE(4) over (order by a.salary desc) faixa
+from hr.employees a
+order by a.salary desc;
