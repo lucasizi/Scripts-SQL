@@ -443,3 +443,40 @@ a.salary,
 NTILE(4) over (order by a.salary desc) faixa
 from hr.employees a
 order by a.salary desc;
+
+
+SELECT A.FIRST_NAME, A.COMMISSION_PCT,
+CASE WHEN A.COMMISSION_PCT IS NOT NULL THEN 'VENDEDOR'
+ELSE 'INTERNO' END HIERARQUIA
+FROM HR.EMPLOYEES A;
+
+SELECT A.FIRST_NAME, A.COMMISSION_PCT,
+CASE WHEN A.COMMISSION_PCT IS NOT NULL THEN 'VENDEDOR'
+ELSE 'INTERNO' END HIERARQUIA
+FROM HR.EMPLOYEES A;
+
+SELECT A.FIRST_NAME, A.SALARY, A.SALARY *-1 SALARIO_NEGATIVO, ABS(A.SALARY*-1) SALARIO_ABS
+FROM HR.EMPLOYEES A;
+
+SET SERVEROUTPUT ON
+
+DECLARE
+     v_str VARCHAR2(100);
+     v_frase VARCHAR2(100);
+    BEGIN
+     -- atribuindo valor
+     v_frase:='Utilidades Oracle';
+      --generate encoded value
+      --1 PARAM BUF VALOR
+      --2 PARAM ENCODE_CHARSET SAO TIPO WE8ISO8859P1 - AL32UTF8
+      --3 PARAM ENCODING - BASE64
+      v_str := utl_encode.text_encode(v_frase,'WE8ISO8859P1', UTL_ENCODE.BASE64);
+      --imprimi valor
+      dbms_output.put_line(v_str);
+      
+      --take the encoded value and decode it
+      v_str := utl_encode.text_decode(v_str,'WE8ISO8859P1', UTL_ENCODE.BASE64);
+      --imprimi valor
+     dbms_output.put_line(v_str);
+     
+   END;
