@@ -480,3 +480,23 @@ DECLARE
      dbms_output.put_line(v_str);
      
    END;
+
+-- criando historico de funcionarios usando union all
+create or replace view v_hist_func
+as
+-- selecionando as informações do historico
+select a.employee_id,
+       b.first_name,
+       a.start_date,
+       a.end_date,
+       a.job_id,
+       c.job_title,
+       a.department_id,
+       d.department_name
+from hr.job_history a
+inner join hr.employees b
+on a.employee_id=b.employee_id
+inner join hr.jobs c
+on a.job_id=c.job_id
+inner join hr.departments d
+on b.manager_id=d.manager_id;
