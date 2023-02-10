@@ -75,13 +75,13 @@ BEGIN
     
     IF V_NUMERO <=10 THEN
         DBMS_OUTPUT.PUT_LINE('VOCÊ DIGITOU UM NÚMEROM DE 0 A 10');
-        ELSIF v_numero >10 AND v_numero <=30 THEN
-            DBMS_OUTPUT.PUT_LINE('VOCÊ DIGITOU UM NÚMEROM DE 11 A 30');
-        ELSIF v_numero >30 AND v_numero <=50 THEN
-            DBMS_OUTPUT.PUT_LINE('VOCÊ DIGITOU UM NÚMEROM DE 31 A 50');  
-        ELSIF v_numero >50 AND v_numero <=100 THEN
-            DBMS_OUTPUT.PUT_LINE('VOCÊ DIGITOU UM NÚMEROM DE 51 A 100');
-        ELSE
-            DBMS_OUTPUT.PUT_LINE('O NÚMERO ESTÁ FORA DOS LIMITES');
-        END IF;
+    ELSIF v_numero >10 AND v_numero <=30 THEN
+        DBMS_OUTPUT.PUT_LINE('VOCÊ DIGITOU UM NÚMEROM DE 11 A 30');
+    ELSIF v_numero >30 AND v_numero <=50 THEN
+        DBMS_OUTPUT.PUT_LINE('VOCÊ DIGITOU UM NÚMEROM DE 31 A 50');  
+    ELSIF v_numero >50 AND v_numero <=100 THEN
+        DBMS_OUTPUT.PUT_LINE('VOCÊ DIGITOU UM NÚMEROM DE 51 A 100');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('O NÚMERO ESTÁ FORA DOS LIMITES');
+    END IF;
 END;
