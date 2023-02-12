@@ -33,7 +33,7 @@ V_ACRESCIMO FLOAT := 0;
 V_ACRES_ANUAL FLOAT := 0;
 
 BEGIN
-DBMS_OUTPUT.PUT_LINE('Você deseja uma parcela de: '||V_ECO||' por mês');
+DBMS_OUTPUT.PUT_LINE('Você deseja uma parcela de: R$'||V_ECO||' por mês');
     SELECT A.NOME_BANCO, A.TIPO_EMPRESTIMO, A.JUROS_MENSAL, a.juros_anual
     INTO v_nome_banco, v_tipo_emprestimo, v_juros_mensal, V_JUROS_ANUAL
     FROM ALUNO.bancos A
@@ -43,7 +43,7 @@ DBMS_OUTPUT.PUT_LINE('Você deseja uma parcela de: '||V_ECO||' por mês');
     
     v_acrescimo:=V_ECO+V_ECO*v_juros_mensal/100;
     DBMS_OUTPUT.PUT_LINE('-------------------------------------------');
-    DBMS_OUTPUT.PUT_LINE('Com a base de juros do seu banco: '||v_nome_banco||' e o tipo de emprestimo: '||v_tipo_emprestimo||', fica um parcela de '||v_acrescimo);
+    DBMS_OUTPUT.PUT_LINE('Com a base de juros do seu banco: '||v_nome_banco||' e o tipo de emprestimo: '||v_tipo_emprestimo||', fica um parcela de R$'||v_acrescimo);
     DBMS_OUTPUT.PUT_LINE('-------------------------------------------');
     
     WHILE V_BANCO < V_CUSTO LOOP
@@ -51,12 +51,11 @@ DBMS_OUTPUT.PUT_LINE('Você deseja uma parcela de: '||V_ECO||' por mês');
         V_COUNT := V_COUNT +1;
     END LOOP;
     
-    
     V_ANOS := V_COUNT/12;
     V_MESES := V_COUNT - (V_ANOS*12);
     
     v_acres_anual:=V_ANOS*V_JUROS_ANUAL;
-    
+
     IF v_count = 1 THEN
         DBMS_OUTPUT.PUT_LINE('Você levara '||v_count||' mês para finalizar o empréstimo');
     ELSIF  v_count > 1 and v_count < 12 THEN
@@ -72,12 +71,13 @@ DBMS_OUTPUT.PUT_LINE('Você deseja uma parcela de: '||V_ECO||' por mês');
     END IF;
     
     DBMS_OUTPUT.PUT_LINE('-------------------------------------------');
-        
-    DBMS_OUTPUT.PUT_LINE('Ao final, você terá pago: '||V_BANCO||' + '||V_ANOS||' X '||v_acres_anual);
+    
+    DBMS_OUTPUT.PUT_LINE('Ao final, você terá pago: R$'||V_BANCO||' + '||V_ANOS||' x R$'||v_acres_anual);
+
+    DBMS_OUTPUT.PUT_LINE('FINALIZARA AS PARCELAS EM: '||TO_CHAR(ADD_MONTHS(SYSDATE, V_COUNT), 'MM/YYYY'));
     
     EXCEPTION WHEN NO_DATA_FOUND THEN
         DBMS_OUTPUT.PUT_LINE('BANCO NÃO ENCONTRADO NO SISTEMA!');
         DBMS_OUTPUT.PUT_LINE('-------------------------------------------');
         
-
 END;
