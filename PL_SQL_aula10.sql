@@ -83,5 +83,13 @@ BEGIN
     EXCEPTION
     WHEN ZERO_DIVIDE THEN -- ESTE É O "RÓTULO" DADO  PELA ORACLE
                                                -- PARA O TIPO DE ERRO DISPARADO
-                                               -- QUANDO OCORRE
+                                               -- QUANDO OCORRE A DIVISÃO POR ZERO
+    DBMS_OUTPUT.PUT_LINE('------------------------');
+    DBMS_OUTPUT.PUT_LINE('ERRO: DIVISÃO POR ZERO.');
+    DBMS_OUTPUT.PUT_LINE('NÃO É POSSIVEL OBTER O V_NUM = 1/0.');
+    DBMS_OUTPUT.PUT_LINE('------------------------');
+    DBMS_OUTPUT.PUT_LINE('CODIGO ORACLE: '||SQLCODE);
+    DBMS_OUTPUT.PUT_LINE('MENSAGEM ORACLE: '||SQLERRM);
+END;
+
     
