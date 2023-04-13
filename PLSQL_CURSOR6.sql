@@ -1,3 +1,4 @@
+SET SERVEROUTPUT ON
 DECLARE
 -- Declara??o de cursores
 CURSOR cs_func(pMenor NUMBER, pMaior NUMBER) is
