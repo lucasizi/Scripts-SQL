@@ -6,83 +6,92 @@ SITUACAO    CHAR(1),
 CONSTRAINT CK_SITUA CHECK(SITUACAO IN('B', 'A'))
 );
 
+--PROCEDURE DE CADASTRO
 CREATE OR REPLACE PROCEDURE SP_CRUD (
-    V_OPER  CHAR, /* I > INSERIR -- A > ATUALIZA -- S > SELECIONA -- D > DELETE */
-    V_ID_PESSOA INTEGER,
-    V_NOME  VARCHAR2,
-    V_EMAIL VARCHAR2,
-    V_SITUACAO  CHAR)
+                                  V_OPER       CHAR, --I INSERIR --A -ATUALIZA --S SELECIONA - D--DELETE
+                                  V_ID_PESSOA  INTEGER,
+                                  V_NOME       VARCHAR2,
+                                  V_EMAIL      VARCHAR2,
+                                  V_SITUACAO   CHAR)
 IS
-    -- DECLARANDO VARIAVEIS
-    V_SID_PESSOA    INTEGER;
-    V_SNOME VARCHAR2(50);
-    V_SEMAIL    VARCHAR2(30);
-    V_SSITUACAO CHAR(1);
-    
-    -- DECLARANDO EXCEPTIONS
-    V_EXCEPTION EXCEPTION;
-    V_FALTA_CPO_INSERT  EXCEPTION;
-    V_FALTA_ID_DELETE   EXCEPTION;
-    V_FALTA_ID_UPDATE   EXCEPTION;
-    
-BEGIN
-    --VERIFICA OPERACAO DE INSERT
-    IF(V_OPER = 'I') THEN
-        IF (V_ID_PESSOA IS NULL OR V_ID_PESSOA = '' OR V_NOME IS NULL OR V_NOME = '' OR V_EMAIL IS NULL OR V_EMAIL = '') THEN
+ --declarando variaveis
+  V_SID_PESSOA INTEGER;
+  V_SNOME VARCHAR2(50);
+  V_SEMAIL VARCHAR2(30);
+  V_SSITUACAO CHAR(1);
+--declarando except
+  v_EXCEPTION EXCEPTION;
+  v_FALTA_CPO_INSERT EXCEPTION;
+  v_FALTA_ID_DELETE EXCEPTION;
+  v_FALTA_ID_UPDATE EXCEPTION;
+BEGIN   
+--verifica operacao de insert
+  IF (V_OPER = 'I') THEN
+    IF (V_ID_PESSOA is null or   V_ID_PESSOA='' or V_NOME is null OR V_NOME='' or  V_EMAIL is null or V_EMAIL='')
+        then 
             ROLLBACK;
-            RAISE V_FALTA_CPO_INSERT;
+            RAISE v_FALTA_CPO_INSERT;
+        else
+        INSERT INTO CAD_PESSOA(ID_PESSOA, NOME,EMAIL, SITUACAO) VALUES (v_id_pessoa, v_NOME, v_email,'A');
+    end if;
+--verifica operacao de atualiza??o
+  ELSIF (V_OPER = 'A') THEN
+     IF (V_ID_PESSOA is null or   V_ID_PESSOA='') 
+     THEN
+        ROLLBACK;
+        RAISE v_FALTA_ID_UPDATE;
         ELSE
-            INSERT INTO CAD_PESSOA(ID_PESSOA, NOME, EMAIL, SITUACAO) VALUES (V_ID_PESSOA, V_NOME, V_EMAIL, 'A');
-        END IF;
-    -- VERIFICA OPERACAO DE ATUALIZACAO
-    ELSIF (V_OPER = 'A') THEN
-        IF (V_ID_PESSOA IS NULL OR V_ID_PESSOA = '') THEN
-            ROLLBACK;
-            RAISE V_FALTA_ID_UPDATE; -- Mudança aqui, antes estava lançando a exceção V_FALTA_ID_DELETE
-        ELSE
-            UPDATE CAD_PESSOA SET NOME = NVL(V_NOME, NOME), EMAIL = NVL(V_EMAIL, EMAIL), SITUACAO = NVL(V_SITUACAO, SITUACAO)
-            WHERE ID_PESSOA = V_ID_PESSOA;
-        END IF;
-    ELSIF (V_OPER = 'D') THEN
-        IF (V_ID_PESSOA IS NULL OR V_ID_PESSOA = '') THEN
-            ROLLBACK;
-            RAISE V_FALTA_ID_DELETE;
+            UPDATE CAD_PESSOA SET NOME =NVL(V_NOME,NOME), EMAIL=NVL(V_EMAIL,EMAIL),SITUACAO=NVL(V_SITUACAO,SITUACAO)
+           WHERE ID_PESSOA = V_ID_PESSOA;
+      end if;  
+  --verifica operacao de delete
+  ELSIF(V_OPER = 'D')THEN
+     IF (V_ID_PESSOA is null or V_ID_PESSOA='') 
+       THEN
+        ROLLBACK;
+        RAISE v_FALTA_ID_DELETE;
         ELSE
             DELETE FROM CAD_PESSOA WHERE ID_PESSOA = V_ID_PESSOA;
-        END IF;
-    ELSIF (V_OPER = 'S') THEN
-        SELECT * INTO V_SID_PESSOA, V_SNOME, V_SEMAIL, V_SSITUACAO
-        FROM CAD_PESSOA WHERE ID_PESSOA = V_ID_PESSOA;
-
-        DBMS_OUTPUT.PUT_LINE('ID: '||V_SID_PESSOA);
-        DBMS_OUTPUT.PUT_LINE('NOME: '||V_SNOME);
-        DBMS_OUTPUT.PUT_LINE('E-MAIL: '||V_SEMAIL);
-        DBMS_OUTPUT.PUT_LINE('SITUACAO: '||V_SSITUACAO);
-        
-    ELSE
-        RAISE V_EXCEPTION;
-    END IF;
-
-    COMMIT;
-    DBMS_OUTPUT.PUT_LINE('DADOS INSERIDOS OU ATUALIZADOS COM SUCESSO');
+     END IF;
+ --verifica operacao de select
+   ELSIF(V_OPER = 'S')THEN
+    SELECT * INTO  V_SID_PESSOA,V_SNOME,V_SEMAIL,V_SSITUACAO 
+    FROM CAD_PESSOA WHERE ID_PESSOA = V_ID_PESSOA;
     
-EXCEPTION
-    WHEN V_EXCEPTION THEN
-        RAISE_APPLICATION_ERROR (-20999,'ATENÇÃO! OPERAÇÃO DIFERENTE DE I, D, A, S', FALSE);
-    WHEN V_FALTA_CPO_INSERT THEN
-        DBMS_OUTPUT.PUT_LINE('FALHA NO INSERT, CAMPOS NÃO PREENCHIDOS CORRETAMENTE!');
-        WHEN V_FALTA_ID_UPDATE THEN
-            DBMS_OUTPUT.PUT_LINE('FALHA NO UPDATE, INFORME O ID!');
-        WHEN V_FALTA_ID_DELETE THEN
-            DBMS_OUTPUT.PUT_LINE('FALHA NO DELETE, INFORME O ID!');
-        WHEN OTHERS THEN
-            IF SQLCODE = '-00001' THEN
-                DBMS_OUTPUT.PUT_LINE('ERRO: CODIGO JÁ EXISTE!');
-            ELSE
-                DBMS_OUTPUT.PUT_LINE('CODIGO: '||SQLCODE);
-                DBMS_OUTPUT.PUT_LINE('ERRO: '||SQLERRM);
-                RAISE;
-            END IF;
-        ROLLBACK;
-
-END;
+     dbms_output.put_line('ID: '||V_SID_PESSOA); 
+     dbms_output.put_line('Nome: '||V_SNOME); 
+     dbms_output.put_line('e-mail: '||V_SEMAIL); 
+     dbms_output.put_line('Situacao: '||V_SSITUACAO); 
+    ELSE
+    RAISE v_EXCEPTION;
+  END IF;
+    
+ COMMIT;
+    dbms_output.put_line('DADOS SELECIONADOS,INSERIDOS OU ATUALIZADO COM SUCESSO'); 
+ --execpt   
+  EXCEPTION
+   
+    WHEN v_EXCEPTION THEN 
+      RAISE_APPLICATION_ERROR(-20999,'ATEN??O! Opera??o diferente de I, D, A OU S', FALSE);
+    
+    WHEN v_FALTA_CPO_INSERT THEN    
+      dbms_output.put_line('FALHA NO INSERT, CAMPOS NAO PREENCHIDOS CORRETAMENTE!'); 
+    
+    WHEN v_FALTA_ID_UPDATE THEN  
+      dbms_output.put_line('FALHA NO UPDATE, INFORME O ID!'); 
+   
+    WHEN v_FALTA_ID_DELETE THEN   
+      dbms_output.put_line('FALHA NO DELETE, INFORME O ID!'); 
+     
+     WHEN OTHERS THEN
+        IF SQLCODE='-00001' THEN
+             DBMS_OUTPUT.PUT_LINE('ERRO: CODIGO JA EXISTE! ');
+             DBMS_OUTPUT.PUT_LINE('ERRO: '||SQLERRM);
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('CODIGO: '||SQLCODE);
+            DBMS_OUTPUT.PUT_LINE('ERRO: '||SQLERRM);
+            RAISE;
+        END IF;
+    ROLLBACK;
+      
+END ;
