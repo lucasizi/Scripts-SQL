@@ -43,3 +43,22 @@ dbms_output.put_line('TOTAL DE COLABORADORES DO DEPARTAMENTO É '||v_qtd);
 dbms_output.put_line('A Média de salario do departamento '||v_depto||' é '||round(v_total_sal / v_qtd,2));
 
 END;
+
+SET SERVEROUTPUT ON
+DECLARE
+v_total_sal NUMBER(10,2);
+v_depto NUMBER;
+v_qtd     INT;
+
+BEGIN
+v_depto := 100;
+select sum(a.salary), count(*) qtd
+    into v_total_sal, v_qtd
+    from hr.employees a where a.department_id=v_depto;
+
+dbms_output.put_line('TOTAL DO SALARIO DO DEPARTAMENTO '||v_depto||' é '||v_total_sal);
+dbms_output.put_line('TOTAL DE COLABORADORES DO DEPARTAMENTO É '||v_qtd);
+dbms_output.put_line('A Média de salario do departamento '||v_depto||' é '||round(v_total_sal / v_qtd,2));
+
+END;
+
