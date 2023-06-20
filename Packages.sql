@@ -1,5 +1,5 @@
 --criando especifica??o do package
---criando a package com 2 fun??es e uma procedure
+--criando a package com 2 funcoes e uma procedure
 CREATE OR REPLACE PACKAGE PKG_FUNC AS
   
     ---PROCEDURE SIMULA SALARIO AUMENTO
